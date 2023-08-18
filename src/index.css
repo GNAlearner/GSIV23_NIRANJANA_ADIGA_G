@@ -1,7 +1,15 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
 .input-box {
     background-color: #9B9B9B;
     border-radius: 5px 5px 5px 5px;
     width: 60vw;
+    margin-left: 12px;
+    padding-left: 1vw;
+    line-height: 2rem;
 }
 
 input {
