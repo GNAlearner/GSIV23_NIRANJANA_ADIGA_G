@@ -17,8 +17,36 @@ input {
     outline: none;
     background-color: #9B9B9B;
     width: 95%;
+    margin-left: 5px;
+}
+
+.search-btn{
+    cursor: pointer;
 }
 
 .home-btn {
     margin-left: auto;
+    cursor: pointer;
+}
+
+.ratings{
+    margin-left: auto;
+}
+
+.details-title {
+    margin-left: 12px;
+}
+
+.details-page {
+    display: inline-block;
+    margin-left: 12px;
+    margin-top: 12px;
+    height: 35vw;
+    width: 98vw;
+    font-size: x-large;
+    border: none;
+}
+
+.details-img {
+    height: 35vw;
 }

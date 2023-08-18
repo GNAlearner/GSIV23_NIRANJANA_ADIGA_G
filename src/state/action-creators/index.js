@@ -52,3 +52,21 @@ export const searchMovies = (input) => {
           }
     }
 }
+
+export const movieDetail = (id) => {
+    const URL = `${Base_URL}movie/${id}?language=en-US&api_key=${API_KEY}`;
+    return async(dispatch)=> {
+        try {
+            const response = await fetch(URL, {
+                method: 'GET',
+                headers: {
+                    accept: 'application/json'
+                }
+            })
+            const data = await response.json();
+            dispatch(fetchMoviesSuccess(data));
+          } catch (error) {
+            dispatch(fetchMoviesFalilure(error.message));
+          }
+    }
+}

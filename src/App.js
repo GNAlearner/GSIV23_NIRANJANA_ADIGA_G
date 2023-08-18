@@ -6,8 +6,8 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 function App() {
   return (
     <>
-    <NavBar />
     <BrowserRouter>
+    <NavBar />
       <Routes>
         <Route exact path="/" element={<ListPage/>}/>
         <Route exact path="/details" element={<DetailsPage/>}/>
