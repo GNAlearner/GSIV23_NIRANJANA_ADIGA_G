@@ -2,7 +2,11 @@ import React from 'react'
 
 const ListPage = () => {
   return (
-    <div>ListPage</div>
+    <div className="container">
+      {
+        
+      }
+    </div>
   )
 }
 
