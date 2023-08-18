@@ -1,1 +1,16 @@
+.input-box {
+    background-color: #9B9B9B;
+    border-radius: 5px 5px 5px 5px;
+    width: 60vw;
+}
 
+input {
+    border: none;
+    outline: none;
+    background-color: #9B9B9B;
+    width: 90%;
+}
+
+.home-btn {
+    margin-left: auto;
+}
