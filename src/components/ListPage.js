@@ -15,7 +15,6 @@ const ListPage = () => {
 
   //On Mounting fetch the upcoming movies and show
   useEffect(() => {
-    window.localStorage.removeItem('movieDetails');
     dispatch(upcomingMovies(1));
   }, []);
 
