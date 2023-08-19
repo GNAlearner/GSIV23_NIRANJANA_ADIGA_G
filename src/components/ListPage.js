@@ -1,46 +1,63 @@
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { upcomingMovies, movieDetail } from '../state/action-creators';
+import { upcomingMovies, searchMovies } from '../state/action-creators';
 import Spinner from './Spinner';
-import { useNavigate } from 'react-router-dom';
-
+import { NavLink } from 'react-router-dom';
+import InfiniteScroll from 'react-infinite-scroll-component'
+import MovieItem from './MovieItem';
 
 const ListPage = () => {
+
   const list = useSelector(state => state.list);
-  const movieToShow = useDispatch();
-  const fetchData = useDispatch();
-  const Navigate = useNavigate();
-  const Image = process.env.REACT_APP_IMG_BASE_URL;
+  const keyword = list?.movies?.keyword;
+  const page = list?.movies?.page;
+  const dispatch = useDispatch();
 
+  //On Mounting fetch the upcoming movies and show
   useEffect(() => {
-    fetchData(upcomingMovies());
-  }, [])
+    window.localStorage.removeItem('movieDetails');
+    dispatch(upcomingMovies(1));
+  }, []);
 
-  const showDetails = (id) => {
-    movieToShow(movieDetail(id));
-    Navigate("/details");
+  //While scrolling it will fetch more data and show
+  const fetchMoreData = () => {
+    if (keyword === "") {
+      //if scrolling of upcoming movies
+      dispatch(upcomingMovies(page + 1));
+    } else {
+      //if scrolling of searched movies
+      dispatch(searchMovies(keyword, page + 1));
+    }
   }
 
   return (
-    <div className="container-fluid mt-2">
-      <div className="row row-cols-5">
-        {list.loading ? <Spinner /> :
-        list?.movies?.results?.map((curMovie) => (
-          <div className="col-md-2" key={curMovie.id}>
-            <div className="card mb-2" style={{cursor: "pointer"}} onClick={()=> {showDetails(curMovie.id)}}>
-              <img src={`${Image}${curMovie.poster_path}`} className="card-img-top" alt="Movie Image"></img>
-              <div className="card-body">
-                <span>
-                  <b>{curMovie.title.length<14 ? curMovie.title : `${curMovie.title.slice(0,13)}...`}</b>
-                  <span className="ratings"> {`(${curMovie.vote_average})`}</span>
-                </span>
-                <p>{curMovie.overview.slice(0,32)}...</p>
-              </div>
-            </div>
+    <>
+      {list.movies.results && <InfiniteScroll
+        dataLength={list.movies.results.length}
+        next={fetchMoreData}
+        hasMore={list.movies.results.length !== list.movies.total_results}
+        loader={<Spinner />}
+      >
+        <div className="container-fluid mt-2">
+          <div className="row">
+            {list?.movies?.results?.map((curMovie) => {
+              return (
+                //Component on clicking will change from List Page to Detail Page
+                <NavLink
+                  to={`details/${curMovie.id}`} className="col-cards mb-2" key={curMovie.id}
+                >
+                  <MovieItem
+                    title={curMovie.title}
+                    poster_path={curMovie.poster_path}
+                    vote_average={curMovie.vote_average}
+                    overview={curMovie.overview} />
+                </NavLink>
+              )
+            })}
           </div>
-        ))}
-      </div>
-    </div>
+        </div>
+      </InfiniteScroll >}
+    </>
   )
 }
 

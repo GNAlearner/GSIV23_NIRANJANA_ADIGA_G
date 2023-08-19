@@ -4,19 +4,23 @@ const initialState = {
     error: '',
   };
 
+//Reducer for fecthing movie details in detail page
 const movieDetailReducer = (state = initialState, action) => {
     switch (action.type) {
-        case 'FETCH_LIST_SUCCESS':
+      //On success fetching of data
+        case 'FETCH_DETAILS_SUCCESS':
             return {
               ...state,
               loading: false,
               details: action.payload,
               error: '',
             };
-        case 'FETCH_LIST_ERROR':
+      //On failed fecthing of data
+        case 'FETCH_DETAILS_ERROR':
           return {
             ...state,
             loading: false,
+            details: [],
             error: action.payload,
           };
         default:
