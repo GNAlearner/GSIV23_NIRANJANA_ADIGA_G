@@ -16,7 +16,7 @@ const ListPage = () => {
   //On Mounting fetch the upcoming movies and show
   useEffect(() => {
     dispatch(upcomingMovies(1));
-  }, []);
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   //While scrolling it will fetch more data and show
   const fetchMoreData = () => {
@@ -31,7 +31,8 @@ const ListPage = () => {
 
   return (
     <>
-      {list.movies.results && <InfiniteScroll
+      {list.loading ? <Spinner/> :
+      list.movies.results && <InfiniteScroll
         dataLength={list.movies.results.length}
         next={fetchMoreData}
         hasMore={list.movies.results.length !== list.movies.total_results}
